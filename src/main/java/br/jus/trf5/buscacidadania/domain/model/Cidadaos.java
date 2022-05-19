@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.modelmapper.ModelMapper;
+
 import lombok.Data;
 
 @Entity(name = "tb_cidadaos")
@@ -21,4 +23,9 @@ public class Cidadaos {
     private String cid_nome;
     private Date cid_datanasc;
     private String cid_foto;
+
+    public static Cidadaos create(Cidadaos c) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(c, Cidadaos.class);
+    }
 }

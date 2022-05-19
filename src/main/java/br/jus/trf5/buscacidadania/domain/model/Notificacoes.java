@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.modelmapper.ModelMapper;
+
 import lombok.Data;
 
 @Entity(name = "tb_notificacoes")
@@ -22,4 +24,9 @@ public class Notificacoes {
     private Integer not_tpnid;
     private Integer not_cidid;
     private Integer not_usuid;
+
+    public static Notificacoes create(Notificacoes n) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(n, Notificacoes.class);
+    }
 }

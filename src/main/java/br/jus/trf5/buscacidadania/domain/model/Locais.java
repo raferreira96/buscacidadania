@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.modelmapper.ModelMapper;
+
 import lombok.Data;
 
 @Entity(name = "tb_locais")
@@ -18,4 +20,9 @@ public class Locais {
     private String loc_descricao;
     private String loc_endereco;
     private Integer loc_tplid;
+
+    public static Locais create(Locais l) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(l, Locais.class);
+    }
 }

@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.modelmapper.ModelMapper;
+
 import lombok.Data;
 
 @Entity(name = "tb_usuarios")
@@ -22,4 +24,9 @@ public class Usuarios {
     private String usu_email;
     private Integer usu_tpuid;
     private Integer usu_locid;
+
+    public static Usuarios create(Usuarios u) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(u, Usuarios.class);
+    }
 }

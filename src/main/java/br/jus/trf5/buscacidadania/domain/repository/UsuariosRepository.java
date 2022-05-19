@@ -1,9 +1,9 @@
 package br.jus.trf5.buscacidadania.domain.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.jus.trf5.buscacidadania.domain.model.Usuarios;
 
-public interface UsuariosRepository extends CrudRepository<Usuarios, Integer> {
+public interface UsuariosRepository extends JpaRepository<Usuarios, Integer> {
     
 }

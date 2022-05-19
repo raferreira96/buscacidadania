@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.modelmapper.ModelMapper;
+
 import lombok.Data;
 
 @Entity(name = "tb_guardas")
@@ -17,4 +19,9 @@ public class Guardas {
 
     private Integer gua_usuid;
     private Integer gua_cidid;
+
+    public static Guardas create(Guardas g) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(g, Guardas.class);
+    }
 }

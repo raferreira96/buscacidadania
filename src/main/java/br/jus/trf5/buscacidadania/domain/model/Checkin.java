@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.modelmapper.ModelMapper;
+
 import lombok.Data;
 
 @Entity(name = "tb_registros")
@@ -21,4 +23,9 @@ public class Checkin {
     private Integer reg_cidid;
     private Integer reg_locid;
     private Integer reg_usuid;
+
+    public static Checkin create(Checkin c) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(c, Checkin.class);
+    }
 }

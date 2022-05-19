@@ -1,6 +1,8 @@
 package br.jus.trf5.buscacidadania.domain.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,25 +18,28 @@ public class LocaisService {
     private LocaisRepository rep;
 
     //Listar todos os Locais
-    public Iterable<Locais> getLocais() {
-        return rep.findAll();
+    public List<Locais> getLocais() {
+        List<Locais> locais = rep.findAll();
+
+        List<Locais> list = locais.stream().map(Locais::create).collect(Collectors.toList());
+        return list;
     }
 
     //Listar local baseado pelo Id
-    public Optional<Locais> getLocaisById(Integer loc_id) {
-        return rep.findById(loc_id);
+    public Optional<Locais> getLocalById(Integer loc_id) {
+        return rep.findById(loc_id).map(Locais::create);
     }
 
     //Inserir um novo local
     public Locais insert(Locais locais) {
-        return rep.save(locais);
+        return Locais.create(rep.save(locais));
     }
 
     //Atualizar um local
     public Locais update(Locais locais, Integer loc_id) {
         Assert.notNull(loc_id, "Não foi possível atualizar o registro.");
 
-        Optional<Locais> optional = getLocaisById(loc_id);
+        Optional<Locais> optional = getLocalById(loc_id);
         if(optional.isPresent()) {
             Locais db = optional.get();
             db.setLoc_descricao(locais.getLoc_descricao());
@@ -43,17 +48,19 @@ public class LocaisService {
             System.out.println("Id Local: " + db.getLoc_id());
 
             rep.save(db);
-            return db;
+            return Locais.create(db);
         } else {
-            throw new RuntimeException("Não foi possível atualizar o registro.");
+            return null;
         }
     }
 
     //Remover um local
-    public void delete(Integer loc_id) {
-        Optional<Locais> locais = getLocaisById(loc_id);
-        if(locais.isPresent()) {
+    public boolean delete(Integer loc_id) {
+        if(getLocalById(loc_id).isPresent()) {
             rep.deleteById(loc_id);
+            return true;
+        } else {
+            return false;
         }
     }
 }
