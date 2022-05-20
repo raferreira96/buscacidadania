@@ -40,19 +40,23 @@ public class UsuariosController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity post(@RequestBody Usuarios usuarios) {
-        try {
-            Usuarios u = service.insert(usuarios);
-            URI location = getUri(u.getUsu_id());
-            return ResponseEntity.created(location).build();
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+    // @PostMapping
+    // public ResponseEntity post(@RequestBody Usuarios usuarios) {
+    //     try {
+    //         Usuarios u = service.insert(usuarios);
+    //         URI location = getUri(u.getUsu_id());
+    //         return ResponseEntity.created(location).build();
+    //     } catch (Exception ex) {
+    //         return ResponseEntity.badRequest().build();
+    //     }
 
     private URI getUri(Integer usu_id) {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{usu_id}").buildAndExpand(usu_id).toUri();
+    }
+
+    @PostMapping("/login")
+    public Usuarios post(@RequestBody Usuarios usuarios) {
+        return service.login(usuarios.username, usuarios.password);
     }
 
     @PutMapping("/{usu_id}")

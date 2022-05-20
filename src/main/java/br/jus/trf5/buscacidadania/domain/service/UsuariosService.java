@@ -29,6 +29,10 @@ public class UsuariosService {
         return rep.findById(usu_id).map(Usuarios::create);
     }
 
+    public Usuarios login(String usu_username, String usu_password) {
+        return rep.findByUsernameAndPassword(usu_username, usu_password);
+    }
+
     //Inserir um novo usuário
     public Usuarios insert(Usuarios usuarios) {
         return Usuarios.create(rep.save(usuarios));
@@ -41,8 +45,8 @@ public class UsuariosService {
         Optional<Usuarios> optional = getUsuarioById(usu_id);
         if(optional.isPresent()) {
             Usuarios db = optional.get();
-            db.setUsu_username(usuarios.getUsu_username());
-            db.setUsu_password(usuarios.getUsu_password());
+            db.setUsername(usuarios.getUsername());
+            db.setPassword(usuarios.getPassword());
             db.setUsu_nome(usuarios.getUsu_nome());
             db.setUsu_cpf(usuarios.getUsu_cpf());
             db.setUsu_email(usuarios.getUsu_email());

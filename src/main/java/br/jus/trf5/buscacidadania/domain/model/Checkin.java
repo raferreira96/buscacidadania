@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.modelmapper.ModelMapper;
 
@@ -20,9 +22,18 @@ public class Checkin {
     private Integer reg_id;
 
     private Date reg_data;
-    private Integer reg_cidid;
-    private Integer reg_locid;
-    private Integer reg_usuid;
+
+    @ManyToOne
+    @JoinColumn(name = "reg_cidid", referencedColumnName = "cid_id")
+    private Cidadaos reg_cidid;
+
+    @ManyToOne
+    @JoinColumn(name = "reg_locid", referencedColumnName = "loc_id")
+    private Locais reg_locid;
+
+    @ManyToOne
+    @JoinColumn(name = "reg_usuid", referencedColumnName = "usu_id")
+    private Usuarios reg_usuid;
 
     public static Checkin create(Checkin c) {
         ModelMapper modelMapper = new ModelMapper();

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.modelmapper.ModelMapper;
 
@@ -21,9 +23,18 @@ public class Notificacoes {
 
     private String not_descricao;
     private Date not_data;
-    private Integer not_tpnid;
-    private Integer not_cidid;
-    private Integer not_usuid;
+
+    @ManyToOne
+    @JoinColumn(name = "not_tpnid", referencedColumnName = "tpn_id")
+    private TipoNotificacao not_tpnid;
+
+    @ManyToOne
+    @JoinColumn(name = "not_cidid", referencedColumnName = "cid_id")
+    private Cidadaos not_cidid;
+
+    @ManyToOne
+    @JoinColumn(name = "not_usuid", referencedColumnName = "usu_id")
+    private Usuarios not_usuid;
 
     public static Notificacoes create(Notificacoes n) {
         ModelMapper modelMapper = new ModelMapper();

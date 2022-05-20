@@ -6,4 +6,5 @@ import br.jus.trf5.buscacidadania.domain.model.Usuarios;
 
 public interface UsuariosRepository extends JpaRepository<Usuarios, Integer> {
     
+    Usuarios findByUsernameAndPassword(String username, String password);
 }

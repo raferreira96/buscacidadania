@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.modelmapper.ModelMapper;
 
@@ -19,7 +21,10 @@ public class Locais {
 
     private String loc_descricao;
     private String loc_endereco;
-    private Integer loc_tplid;
+
+    @ManyToOne
+    @JoinColumn(name = "loc_tplid", referencedColumnName = "tpl_id")
+    private TipoLocal loc_tplid;
 
     public static Locais create(Locais l) {
         ModelMapper modelMapper = new ModelMapper();
