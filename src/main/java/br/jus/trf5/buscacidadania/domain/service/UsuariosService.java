@@ -29,10 +29,6 @@ public class UsuariosService {
         return rep.findById(usu_id).map(Usuarios::create);
     }
 
-    public Usuarios login(String usu_username, String usu_password) {
-        return rep.findByUsernameAndPassword(usu_username, usu_password);
-    }
-
     //Inserir um novo usuário
     public Usuarios insert(Usuarios usuarios) {
         return Usuarios.create(rep.save(usuarios));

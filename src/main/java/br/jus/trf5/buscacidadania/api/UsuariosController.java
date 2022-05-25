@@ -54,11 +54,6 @@ public class UsuariosController {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{usu_id}").buildAndExpand(usu_id).toUri();
     }
 
-    @PostMapping("/login")
-    public Usuarios post(@RequestBody Usuarios usuarios) {
-        return service.login(usuarios.username, usuarios.password);
-    }
-
     @PutMapping("/{usu_id}")
     public ResponseEntity put(@PathVariable("usu_id") Integer usu_id, @RequestBody Usuarios usuarios) {
         usuarios.setUsu_id(usu_id);
