@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,11 +27,13 @@ public class UsuariosController {
     private UsuariosService service;
 
     @GetMapping
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity get() {
         return ResponseEntity.ok(service.getUsuarios());
     }
 
     @GetMapping("/{usu_id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity getUsuariosById(@PathVariable("usu_id") Integer usu_id) {
         Optional<Usuarios> usuarios = service.getUsuarioById(usu_id);
         if(usuarios.isPresent()) {
@@ -40,21 +43,24 @@ public class UsuariosController {
         }
     }
 
-    // @PostMapping
-    // public ResponseEntity post(@RequestBody Usuarios usuarios) {
-    //     try {
-    //         Usuarios u = service.insert(usuarios);
-    //         URI location = getUri(u.getUsu_id());
-    //         return ResponseEntity.created(location).build();
-    //     } catch (Exception ex) {
-    //         return ResponseEntity.badRequest().build();
-    //     }
+    @PostMapping
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity post(@RequestBody Usuarios usuarios) {
+        try {
+            Usuarios u = service.insert(usuarios);
+            URI location = getUri(u.getUsu_id());
+            return ResponseEntity.created(location).build();
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
     private URI getUri(Integer usu_id) {
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{usu_id}").buildAndExpand(usu_id).toUri();
     }
 
     @PutMapping("/{usu_id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity put(@PathVariable("usu_id") Integer usu_id, @RequestBody Usuarios usuarios) {
         usuarios.setUsu_id(usu_id);
 
@@ -66,6 +72,7 @@ public class UsuariosController {
     }
 
     @DeleteMapping("/{usu_id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity delete(@PathVariable("usu_id") Integer usu_id) {
         boolean ok = service.delete(usu_id);
 

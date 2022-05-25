@@ -10,12 +10,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
 
+import br.jus.trf5.buscacidadania.api.NotificacoesController;
 import lombok.Data;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Entity(name = "tb_notificacoes")
 @Data
-public class Notificacoes {
+public class Notificacoes extends RepresentationModel<Notificacoes> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +42,8 @@ public class Notificacoes {
 
     public static Notificacoes create(Notificacoes n) {
         ModelMapper modelMapper = new ModelMapper();
+        n.add(linkTo(NotificacoesController.class).slash(n.getNot_id()).withSelfRel());
+        n.add(linkTo(NotificacoesController.class).withRel("allNotificacoes"));
         return modelMapper.map(n, Notificacoes.class);
     }
 }

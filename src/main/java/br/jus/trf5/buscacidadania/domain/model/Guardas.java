@@ -8,12 +8,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
 
+import br.jus.trf5.buscacidadania.api.GuardasController;
 import lombok.Data;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Entity(name = "tb_guardas")
 @Data
-public class Guardas {
+public class Guardas extends RepresentationModel<Guardas> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +33,8 @@ public class Guardas {
 
     public static Guardas create(Guardas g) {
         ModelMapper modelMapper = new ModelMapper();
+        g.add(linkTo(GuardasController.class).slash(g.getGua_id()).withSelfRel());
+        g.add(linkTo(GuardasController.class).withRel("allGuardas"));
         return modelMapper.map(g, Guardas.class);
     }
 }

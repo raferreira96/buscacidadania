@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +42,7 @@ public class LocaisController {
     }
 
     @PostMapping
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity post(@RequestBody Locais locais) {
         try {
             Locais l = service.insert(locais);
@@ -56,6 +58,7 @@ public class LocaisController {
     }
 
     @PutMapping("/{loc_id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity put(@PathVariable("loc_id") Integer loc_id, @RequestBody Locais locais) {
         locais.setLoc_id(loc_id);
 
@@ -67,6 +70,7 @@ public class LocaisController {
     }
 
     @DeleteMapping("/{loc_id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity delete(@PathVariable("loc_id") Integer loc_id) {
         boolean ok = service.delete(loc_id);
 

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,7 @@ public class NotificacoesController {
     }
 
     @PostMapping
+    @Secured({"ROLE_ADMIN","ROLE_JUSTICA"})
     public ResponseEntity post(@RequestBody Notificacoes notificacoes) {
         try {
             Notificacoes n = service.insert(notificacoes);

@@ -10,12 +10,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.RepresentationModel;
 
+import br.jus.trf5.buscacidadania.api.CheckinController;
 import lombok.Data;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Entity(name = "tb_registros")
 @Data
-public class Checkin {
+public class Checkin extends RepresentationModel<Checkin> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +41,8 @@ public class Checkin {
 
     public static Checkin create(Checkin c) {
         ModelMapper modelMapper = new ModelMapper();
+        c.add(linkTo(CheckinController.class).slash(c.getReg_id()).withSelfRel());
+        c.add(linkTo(CheckinController.class).withRel("allCheckins"));
         return modelMapper.map(c, Checkin.class);
     }
 }

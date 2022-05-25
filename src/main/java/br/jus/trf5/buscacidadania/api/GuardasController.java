@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class GuardasController {
     }
 
     @PostMapping
+    @Secured({"ROLE_ADMIN","ROLE_ASSISTENTE"})
     public ResponseEntity post(@RequestBody Guardas guardas) {
         try {
             Guardas g = service.insert(guardas);
@@ -55,6 +57,7 @@ public class GuardasController {
     }
 
     @DeleteMapping("/{gua_id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity delete(@PathVariable("gua_id") Integer gua_id) {
         boolean ok = service.delete(gua_id);
 
